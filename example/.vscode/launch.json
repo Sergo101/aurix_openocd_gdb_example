@@ -1,0 +1,102 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+        "configurations": [
+            {
+          "name": "Attach gdbtarget",
+          "type": "gdbtarget",
+          "request": "attach",
+          "program": "${workspaceFolder}/Debug/Blinky_LED_1_KIT_TC277_TFT.elf",
+
+          "cwd": "${workspaceRoot}",
+            
+          "preLaunchTask": "start openocd",
+          // "gdb": "powerpc-eabivle-gdb",
+          "gdb": "C:/buildtools/infineon/tricore-gdb/gdb.exe",
+          // "gdb": "gdb-multiarch",
+          "target": {
+            "host": "localhost",
+            "port": "3333"
+          },
+
+          "initCommands": [
+            "set architecture TriCore:V1_6",
+            "set mem inaccessible-by-default off",
+            "set remotetimeout 200",
+            // C:/Users/Usr/AURIX-v1.10.10-workspace/Blinky_LED_1_KIT_TC277_TFT/Debug/Blinky_LED_1_KIT_TC277_TFT.elf
+            // "symbol-file \"C:/mcu/spc5/SPC560Bxx_RLA SERIAL Test Application for Discovery/build/out.elf\""
+          ],
+          // "preRunCommands": [
+          //   "monitor gdb_sync",
+          //   "stepi"
+          // ],
+
+        //   "definitionPath": "${workspaceFolder}/MPC5744P.svd",
+        },
+        {
+            "name": "Launch Tricore",
+            "cwd": "${workspaceFolder}",
+            "executable": "${workspaceFolder}/Debug/Blinky_LED_1_KIT_TC277_TFT.elf",
+            // "loadFiles": ["C:/MounRiver/ch32h417/cmake_ch32h417_test/build/debug/V3F/cmake_ch32h417_v3f.hex"],
+            "request": "attach",
+            "type": "cortex-debug",
+            "runToEntryPoint": "main",
+            "numberOfProcessors": 3,
+            "targetProcessor": 0,
+            "chainedConfigurations": {
+                "enabled": true,
+                "waitOnEvent": "postInit",
+                "detached": false,                         // Set this to true for JLink/STLink, false for most other type servers
+                "lifecycleManagedByParent": true,
+                "launches": [                              // Array of launches. Order is respected
+                    {
+                        "name": "Attach to core 1",     // Name of another configuration
+                        "folder": ""
+                    },
+                    {
+                        "name": "Attach to core 2",     // Name of another configuration
+                        "folder": ""
+                    }
+                ],
+            },
+            "servertype": "external",
+            "gdbTarget": "localhost:3333",
+            "preLaunchTask": "start openocd",
+            "overrideAttachCommands": [
+                "set architecture TriCore:V1_6",
+                "monitor gdb_breakpoint_override hard",
+                "set remotetimeout 200",
+                // C:/Users/Usr/AURIX-v1.10.10-workspace/Blinky_LED_1_KIT_TC277_TFT/Debug/Blinky_LED_1_KIT_TC277_TFT.elf
+            ],
+            "svdFile": "C:/buildtools/infineon/tricore_svd/tc27xdpd/1.1-2/device.svd"
+        },
+        {
+            "name": "Attach to core 1",
+            "cwd": "${workspaceFolder}",
+            "type": "cortex-debug",
+            "request": "attach",
+            "executable": "${workspaceFolder}/Debug/Blinky_LED_1_KIT_TC277_TFT.elf",
+            
+            "numberOfProcessors": 3,
+            "targetProcessor": 1,
+            "servertype": "external",
+            "gdbTarget": "localhost:3334",
+            // "svdFile": "C:/buildtools/infineon/tricore_svd/tc27xdpd/1.1-2/device.svd"
+        },
+        {
+            "name": "Attach to core 2",
+            "cwd": "${workspaceFolder}",
+            "type": "cortex-debug",
+            "request": "attach",
+            "executable": "${workspaceFolder}/Debug/Blinky_LED_1_KIT_TC277_TFT.elf",
+            
+            "numberOfProcessors": 3,
+            "targetProcessor": 2,
+            "servertype": "external",
+            "gdbTarget": "localhost:3335",
+            // "svdFile": "C:/buildtools/infineon/tricore_svd/tc27xdpd/1.1-2/device.svd"
+        }
+    ]
+}

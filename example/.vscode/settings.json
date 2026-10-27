@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+    },
+    "cortex-debug.variableUseNaturalFormat": false,
+    "cortex-debug.gdbPath.windows": "C:/buildtools/infineon/tricore-gdb/gdb.exe",
+
+    "cortex-debug.openocdPath.windows": "C:/buildtools/infineon/openocd_tricore/out/bin/openocd.exe",
+}

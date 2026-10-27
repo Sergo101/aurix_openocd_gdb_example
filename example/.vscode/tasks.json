@@ -1,0 +1,67 @@
+{
+    "version": "2.0.0",
+    "windows": {
+        "options": {
+            "shell": {
+                "executable": "cmd.exe",
+                "args": ["/d", "/c"]
+            }
+        }
+    },
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "start openocd",
+            "command": "C:/buildtools/infineon/openocd_tricore/out/bin/openocd.exe -f board/infineon/appkit_tc277_tft.cfg",
+            "args":[],
+
+            "isBackground": true,
+            "problemMatcher": {
+                "pattern": {
+                  "regexp": "Error:",
+                  "file": 1,
+                  "location": 1,
+                  "severity": 4
+                },
+                "background": {
+                  "activeOnStart": true,
+                  "beginsPattern": "Open On-Chip Debugger 0.11.0+dev-snapshot",
+                  "endsPattern": "Info : Listening on port 4444 for telnet connections"
+                }
+            }
+        },
+        {
+            "type": "shell",
+            "label": "flash openocd",
+            "command": "C:/buildtools/infineon/openocd_tricore/out/bin/openocd.exe -f board/infineon/appkit_tc277_tft.cfg -c \"program C:/Users/Usr/AURIX-v1.10.10-workspace/Blinky_LED_1_KIT_TC277_TFT/Debug/Blinky_LED_1_KIT_TC277_TFT.hex verify reset exit",
+            "args":[],
+
+            "isBackground": true,
+            "problemMatcher": {
+                "pattern": {
+                  "regexp": "Error:",
+                  "file": 1,
+                  "location": 1,
+                  "severity": 4
+                },
+                "background": {
+                  "activeOnStart": true,
+                  "beginsPattern": "Open On-Chip Debugger 0.11.0+dev-snapshot",
+                  "endsPattern": "Info : Listening on port 3334 for gdb connections"
+                }
+            }
+        },
+        {
+            "type": "cmake",
+            "label": "CMake: clean rebuild",
+            "command": "cleanRebuild",
+            "targets": [
+                "all"
+            ],
+            "preset": "${command:cmake.activeBuildPresetName}",
+            "group": "build",
+            "problemMatcher": [],
+            "detail": "CMake template clean rebuild task"
+        },
+    ]
+}
